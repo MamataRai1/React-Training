@@ -26,9 +26,10 @@ import { useEffect, useState } from "react";
        setIsLoading(false);
      }
    };
-   useEffect(() => {
-     getData();
-   },[]);
+
+  useEffect(() => {
+      getData();
+  }, []);
    const isINTabPage = location?.pathname?.split("/").filter(Boolean).at(-1);
    console.log(isINTabPage == "review" ? "../" : "#");
    return (
