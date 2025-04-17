@@ -1,4 +1,4 @@
-import { Routes, Route, Outlet, Link } from "react-router";
+import { Routes, Route, Outlet, Link, NavLink } from "react-router";
  import Home_Page from "./pages/home_Page";
  import SingleProductPage, {OverviewPage,ReviewPage,} from "./pages/product/singleProduct";
 import ProductPage from "./pages/product";
@@ -43,17 +43,33 @@ return (
   </div>
 );
 }
+const Links =[
+  { name: "Home", path: "/" },
+ 
+  { name: "Product", path: "/product" },
+]
 
 export function Navbar() {
 console.log("Navbar");
 return (
   <div>
     <div>Navbar</div>
-    {["/", "/contact", "/product"].map((path) => (
-      <Link key={path} to={path}>
-        {path}
-      </Link>
+    <div className="space-x-4 flex justify-center items-center">
+     {Links.map(({name, path}) => (
+      <NavLink
+        
+        className={({ isActive }) =>
+          isActive ? "text-blue-500" : "text-gray-500"
+        }
+        key={path}
+        to={path}
+      >
+        {name}
+      </NavLink>
+
+     
     ))}
+    </div>
   </div>
 );
 }
