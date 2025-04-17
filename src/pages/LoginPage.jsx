@@ -55,18 +55,41 @@
 
 
  
- 
+  
+import { useNavigate } from 'react-router-dom';
 
 export default function LoginPage(){
-    const handleSubmit = (e)=>{
+    const navigate = useNavigate();
+    const handleSubmit =async (e)=>{
         e.preventDefault();
         const formData = new FormData(e.target);
         const username = formData.get("username");
         const password = formData.get("password");
         console.log("password", username);
         console.log("password", password);
-        e.target.reset();
+
+        const credentials = { username, password };
+        try {
+        const res = await fetch('https://fakestoreapi.com/auth/login', {
+         method: "POST",
+         headers: { "Content-Type": "application/json" },
+         body: JSON.stringify(credentials),
+        });
+        const data = await res.json();
+        console.log("data", data);
+        if (data.token){
+            localStorage.setItem("token", data.token);
+            navigate("/product");
+        }
+    }catch (error) {
+        console.error( error);
+        throw new Error("Something went wrong");
+   
     }
+      
+          e.target.reset();
+    };
+     
  
   return (
     <div style ={{width:"100%",textAlign:"center"}}>

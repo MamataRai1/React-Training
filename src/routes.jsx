@@ -2,6 +2,8 @@ import { Routes, Route, Outlet, Link, NavLink } from "react-router";
  import Home_Page from "./pages/home_Page";
  import SingleProductPage, {OverviewPage,ReviewPage,} from "./pages/product/singleProduct";
 import ProductPage from "./pages/product";
+import Navbar from "./components/Navbar";
+import LoginPage from "./pages/LoginPage";
 
 export default function AppRoutes() {
 return (
@@ -28,7 +30,7 @@ return (
       </Route>
       <Route path="*" element={<div>404</div>} />
     </Route>
-    <Route path="login" element={<div>Login Page</div>} />
+    <Route path="login" element={<LoginPage/>} />
     <Route path="register" element={<div>Register Page</div>} />
   </Routes>
 );
@@ -49,30 +51,7 @@ const Links =[
   { name: "Product", path: "/product" },
 ]
 
-export function Navbar() {
-console.log("Navbar");
-return (
-  <div>
-    <div>Navbar</div>
-    <div className="space-x-4 flex justify-center items-center">
-     {Links.map(({name, path}) => (
-      <NavLink
-        
-        className={({ isActive }) =>
-          isActive ? "text-blue-500" : "text-gray-500"
-        }
-        key={path}
-        to={path}
-      >
-        {name}
-      </NavLink>
 
-     
-    ))}
-    </div>
-  </div>
-);
-}
 
 export function Footer() {
 console.log("Footer");
