@@ -22,7 +22,7 @@ return (
       <Route path="contact" element={<div>Contact Page</div>} />
       <Route path="product">
         <Route element={<ProductPage />} index />
-        <Route path=":productID" element={<SingleProductPage />}>
+        <Route path=":productID" element={<ProductPage />}>
           <Route path="review" element={<ReviewPage />} />
           <Route path="overview" element={<OverviewPage />} />
           <Route index element={<OverviewPage />} />

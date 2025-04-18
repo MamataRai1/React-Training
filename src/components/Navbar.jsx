@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import React from 'react'
 const Navbar = () => {
   return (
@@ -7,13 +8,14 @@ const Navbar = () => {
           <h2 className='text-2xl font-semibold'>Logo</h2>
         </div>
         {/* NavLinks */}
-        <div className='w-[60%] flex list-none items-center justify-center gap-7 font-medium text-white'>
+        <nav className='w-[60%] flex list-none items-center justify-center gap-7 font-medium text-white'>
             <li className='cursor-pointer'>Home</li>
             <li className='cursor-pointer'>Contact</li>
             <li className='cursor-pointer'>About Us</li>
             <li className='cursor-pointer'>Services</li>
-            <li className='cursor-pointer'>Products</li>
-        </div>
+            <Link to="product" className='cursor-pointer'>Products</Link>
+            <Link to="cart" className='cursor-pointer'>Cart</Link>
+        </nav>
 
         {/* auth buttons */}
         <div className='flex items-center justify-center gap-5'>

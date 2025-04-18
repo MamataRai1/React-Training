@@ -1,7 +1,7 @@
 import {  useEffect, useState } from "react";
 import{ Link} from "react-router";
 
-export default function ProductPage(){
+export default function ProductPage(addToCart){
     const[products, setProducts]=useState([]);
     const getData = async ()=> {
         const res=await   fetch("https://fakestoreapi.com/products");
@@ -14,6 +14,7 @@ export default function ProductPage(){
         getData();
     },[]);
     
+     
 
     return(
         <div>
@@ -31,6 +32,7 @@ export default function ProductPage(){
                         <img src={product?.image} style={{height:"3rem"}}/>
                         <h3>{product?.title}</h3>
                         <h3>{product?.desciption}</h3>
+                        <button onClick={() => addToCart(product)}>Add to Cart</button>
                           
                     </div>
                     </Link>
