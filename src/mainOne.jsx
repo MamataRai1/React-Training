@@ -11,5 +11,6 @@ root.render(
       <AppRoutes />
        
     </BrowserRouter>
+    {/* <RouterProvider router={router} /> */}
   </StrictMode>
 );

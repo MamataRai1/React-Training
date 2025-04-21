@@ -1,35 +1,70 @@
 import { useEffect, useState } from "react";
-
-export default function Cart({cart}) {
-    const [apiCart, setApiCart] = useState([]);
-    const getData = async () => {
-        const res = await fetch("https://fakestoreapi.com/carts");
-        const data = await res.json();
-        if (data && data.length) {
-            setApiCart(data);
-        }
-    };
-    useEffect(() => {
-        getData();
-    }, []);
-    console.log("cart", cart);
-    console.log("apiCart", apiCart);
-     
-    return (
-        <div className="flex flex-col items-center justify-center gap-5">
-            <h1 className="text-2xl font-semibold">Cart</h1>
-            <div className="flex flex-col gap-5">
-                {cart?.map((item) => (
-                    <div
-                        key={item.id}
-                        className="flex items-center justify-between w-[30%] border p-4 rounded-md"
-                    >
-                        <img src={item.image} alt={item.title} className="w-16 h-16" />
-                        <h2>{item.title}</h2>
-                        <p>${item.price}</p>
-                    </div>
-                ))}
-            </div>
-        </div>
-    );
-}
+ const USERID = 1;
+ export default function CartPage() {
+   const [carts, setCarts] = useState([]);
+   const getData = async () => {
+     const res = await fetch("https://fakestoreapi.com/carts");
+     const data = await res.json();
+ 
+     if (data && data.length) {
+       const userCart = data.filter((cart) => cart?.userId === USERID);
+       console.log(userCart);
+       setCarts(userCart);
+     }
+   };
+   useEffect(() => {
+     getData();
+   }, []);
+   console.log(carts);
+   return (
+     <div>
+       <h1>Cart Page</h1>
+       <div>
+         <h3>{carts?.length}</h3>
+         {carts?.map((cart) => (
+           <div key={cart?.id}>
+             {cart.products?.map((product) => {
+               return <CartProduct cProduct={product} />;
+             })}
+           </div>
+         ))}
+       </div>
+     </div>
+   );
+ }
+ 
+ function CartProduct({ cProduct }) {
+   const [product, setProduct] = useState(null);
+   const getData = async () => {
+     const res = await fetch(
+       `https://fakestoreapi.com/products/${cProduct?.productId}`
+     );
+     const data = await res.json();
+     if (data) {
+       setProduct(data);
+     }
+   };
+   useEffect(() => {
+     getData();
+   }, []);
+   return (
+     <div>
+       <div
+         style={{
+           border: "1px solid",
+           backgroundColor: "purple",
+           color: "white",
+           padding: "1rem",
+           viewTransitionName: `product${product?.id}`,
+           display: "flex",
+         }}
+       >
+         <img src={product?.image} style={{ height: "2rem" }} />
+         <div>
+           <h3>{product?.title}</h3>
+           <div>{cProduct?.quantity}</div>
+         </div>
+       </div>{" "}
+     </div>
+   );
+ }

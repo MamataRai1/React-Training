@@ -57,9 +57,11 @@
  
   
 import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 export default function LoginPage(){
     const navigate = useNavigate();
+    useCheckAuth(true);
     const handleSubmit =async (e)=>{
         e.preventDefault();
         const formData = new FormData(e.target);
@@ -81,13 +83,14 @@ export default function LoginPage(){
             localStorage.setItem("token", data.token);
             navigate("/product");
         }
+        e.target.reset();
     }catch (error) {
         console.error( error);
         throw new Error("Something went wrong");
    
     }
       
-          e.target.reset();
+          
     };
      
  
@@ -102,8 +105,35 @@ export default function LoginPage(){
                  
                 <input type="password" name="password" placeholder=" password"  />
             </div>
+            <button type="">Reset</button>
             <button type="submit">Login</button>
         </form>
     </div>
   );
+
 }
+
+export const useCheckAuth = (navigateTo = false) => {
+    const navigate = useNavigate();
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const hasToken = localStorage.getItem("token");
+    const handleLogout = () => {
+      localStorage.removeItem("token");
+      setIsLoggedIn(false);
+    };
+    useEffect(() => {
+      if (!hasToken) {
+        if (navigateTo) {
+          navigate("/login");
+        }
+        setIsLoggedIn(false);
+      } else {
+        if (navigateTo) {
+          navigate("/product");
+        }
+        setIsLoggedIn(true);
+      }
+    }, [hasToken, navigate, navigateTo]);
+    return { isLoggedIn, handleLogout };
+  };  
+
